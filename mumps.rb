@@ -49,12 +49,21 @@ class Mumps < Formula
     make_args << "ORDERINGSF=#{orderingsf}"
 
     if build.with? :mpi
-      make_args += ["CC=#{ENV['MPICC']} -fPIC",
-                    "FC=#{ENV['MPIFC']} -fPIC",
-                    "FL=#{ENV['MPIFC']} -fPIC",
-                    "SCALAP=-L#{Formula["scalapack"].lib} -lscalapack",
-                    "INCPAR=-I#{Formula["open-mpi"].include}",
-                    "LIBPAR=$(SCALAP) -L#{Formula["open-mpi"].lib} -lmpi -lmpi_mpifh"]
+      if Formula["open-mpi"].installed?
+        make_args += ["CC=#{ENV['MPICC']} -fPIC",
+                      "FC=#{ENV['MPIFC']} -fPIC",
+                      "FL=#{ENV['MPIFC']} -fPIC",
+                      "SCALAP=-L#{Formula["scalapack"].lib} -lscalapack",
+                      "INCPAR=-I#{Formula["open-mpi"].include}",
+                      "LIBPAR=$(SCALAP) -L#{Formula["open-mpi"].lib} -lmpi -lmpi_mpifh"]
+      elsif Formula["mpich2"].installed?
+        make_args += ["CC=#{ENV['MPICC']} -fPIC",
+                      "FC=#{ENV['MPIFC']} -fPIC",
+                      "FL=#{ENV['MPIFC']} -fPIC",
+                      "SCALAP=-L#{Formula["scalapack"].lib} -lscalapack",
+                      "INCPAR=-I#{Formula["mpich2"].include}",
+                      "LIBPAR=$(SCALAP) -L#{Formula["mpich2"].lib} -lpmpich -lmpich -lopa -lmpl -lpthread"]
+      end
     else
       make_args += ["CC=#{ENV['CC']} -fPIC",
                     "FC=#{ENV['FC']} -fPIC",
