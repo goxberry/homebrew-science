@@ -11,7 +11,8 @@ class Ipopt < Formula
     sha256 "f705d7a6a0f743a1618baa28754d4edd44bba3ddd76d675f8f3118745157cdc9" => :mountain_lion
   end
 
-  option "without-check", "Skip build-time tests (not recommended)"
+  option "without-test", "Skip build-time tests (not recommended)"
+  deprecated_option "without-check" => "without-test"
 
   depends_on "asl" => :recommended
   depends_on "openblas" => :optional
@@ -53,7 +54,7 @@ class Ipopt < Formula
     system "./configure", *args
     system "make"
     ENV.deparallelize # Needs a serialized install
-    system "make", "test" if build.with? "check"
+    system "make", "test" if build.with? "test"
     system "make", "install"
   end
 
