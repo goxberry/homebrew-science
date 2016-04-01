@@ -1,4 +1,5 @@
 class Ipopt < Formula
+  desc "Large-scale nonlinear optimization package"
   homepage "https://projects.coin-or.org/Ipopt"
   url "http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.4.tgz"
   sha256 "292afd952c25ec9fe6225041683dcbd3cb76e15a128764671927dbaf881c2e89"
